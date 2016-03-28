@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="style.css">
+  <title>The Trivia Game</title>
+</head>
+<body>
+  <div class="row header">
+    <div class="column column-12">
+
+    </div>
+  </div>
+ 
+
+  <div class="row middle">
+    <div class="column column-8">
+      <div class="row top">
+        <div class="column column-8">
+          <section class="section1a">
+            <select name="Category" id="category">
+              <option value="1"></option>
+              <option value="2">Politics</option>
+              <option value="3">Washington, DC</option>
+              <option value="4">Geography</option>
+            </select>
+            <div class="Question" >Hello
+              <p id="question"></p>
+            </div>
+          </section>
+        </div>
+        <div class="column column-4">
+          <button type="button" id=start>Start</button>
+          <button type="button" id=stop>Stop</button>
+        </div>
+      </div>
+      <div class="row bottom">
+        <div class="column column-12">
+          <section class="section2a" >
+            <input type="checkbox" name="firstchoice" value=""><br>
+            <div class="section2a">
+              <p id="firstchoice">testing 1 2 3</p>
+            </div>
+          </section>
+
+
+        </div>
+      </div>
+
+    </div>
+
+
+      <div class="column column-4">
+
+      </div>
+  </div>
+
+
+
+<div class="row footer">
+  <div class="column column-12">
+    <p id="messages">just some test text</p>
+    <label>Enter replies here <input type="text" id="fromPlayer"/></label><br />
+
+  </div>
+</div>
+
+
+
+  <script src="trivia.js"></script>
+</body>
+</html>

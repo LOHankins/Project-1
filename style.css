@@ -1,0 +1,73 @@
+.row, .column {
+  /* By default, box-sizing is set to content-box */
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.row:before, .row:after {
+  content: "";
+  display: table;
+}
+
+.row:after {
+  clear: both;
+}
+
+.column {
+  float: left;
+  position: relative;
+  border: 2px solid Tomato;
+  border-radius: 20px;
+  text-align: center;
+  overflow: auto;
+}
+
+.header > .column,
+.footer > .column {
+  padding: 25px;
+}
+
+.middle > .column {
+  height: 400px;
+  line-height: 400px;
+}
+
+.top > .column {
+	height: 150px;
+	line-height: 150px;
+}
+
+body {
+	background-color: gray;
+}
+
+h1 {
+	color: white;
+	background-color: black;
+}
+
+#category {
+	float: right;
+	border: 2px solid black
+  	border-radius: 20px;
+  	text-align: center;
+}
+
+.section1a {
+	overflow: auto;
+}
+
+
+
+.column-1 { width: 8.33%; }
+.column-2 { width: 16.66%; }
+.column-3 { width: 25%; }
+.column-4 { width: 33.33%; }
+.column-5 { width: 41.66%; }
+.column-6 { width: 50%; }
+.column-7 { width: 58.33%; }
+.column-8 { width: 66.66%; }
+.column-9 { width: 75%; }
+.column-10 { width: 83.33%; }
+.column-11 { width: 91.66%; }
+.column-12 { width: 100%; }
