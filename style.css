@@ -121,6 +121,11 @@ h1 {
 
 }
 
+.scoreboard {
+	border: 2px solid purple;
+	border-radius: 20px;
+}
+
 
 
 .column-1 { width: 8.33%; }
