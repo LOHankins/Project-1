@@ -6,7 +6,7 @@ var entry=document.getElementById("fromPlayer");
 var nameOfPlayer="";
 var startButton=document.getElementById("start");
 var stopButton=document.getElementById("stop");
-var startGame ="Ok " + nameOfPlayer + ", Select the Politics category and Press the Start button when you are ready!";
+var startGame ="Ok " + nameOfPlayer + ", Select a category and Press the Start button when you are ready!";
 var i = 0;
 var firstchoice = document.querySelector("#trythis1p");
 var secondchoice = document.querySelector("#trythis2p");
@@ -18,8 +18,8 @@ var checkBox3 = document.getElementById("cbox3");
 var checkBox4 = document.getElementById("cbox4");
 var congratulations = "Congratulations on the correct answer!  When you are ready for the next question, hit the start button.";
 var admonishment = "That was an incorrect answer. When you are ready for the next question, hit the start button.";
-var endOfGameText = "You have completed all of the questions for this category.  Your results are displayed on the scoreboard.  If you want to continue, pick another category and keep going.";
-var stopGameText = "You have elected to stop play.  Your results are displayed on the scoreboard.  If you want to continue, pick another category and keep going.";
+var endOfGameText = "You have completed all of the questions for this category.  Your results are displayed on the scoreboard.  If you want to continue, put a c in the reply field, hit enter, pick another category and hit the start button.";
+var stopGameText = "You have elected to stop play.  Your results are displayed on the scoreboard.  If you want to continue, put a c in the reply field, hit enter, pick another category and hit the start button.";
 var messageContent = "";
 var currentScore = 0;
 var hiScore = 0;
@@ -28,13 +28,20 @@ var answeredCorrectly = 0;
 
 var politics = [{question:"Who is the POTUS?", correct:"Barack Obama", bad1:"George W. Bush", bad2:"Hillary Clinton", bad3:"Donald Trump"}, {question:"Who is the Vice-President?", correct:"Joe Biden", bad1:"Richard Daley", bad2:"Rayful Edmunds", bad3:"Marion Barry"}, {question:"In 2012, who did Barack Obama beat to win a second term?", correct:"Mitt Romney", bad1:"Bill Oreilly", bad2:"Sarah Palin", bad3:"John Boehner"}, {question:"Who was the Vice President for George W. Bush?", correct:"Dick Cheney", bad1:"George Jefferson", bad2:"Sarah Day O'Connor", bad3:"Vito Corleone"}, {question:"Who was the Vice President for Ronald Reagan?", correct:"George H W Bush", bad1:"George W. Bush", bad2:"Jeb Bush", bad3:"Bill Clinton"}];
 
+var washington = [{question:"Who is the designer of Washington, DC?", correct:"Pierre Charles L'Enfant", bad1:"George Washington", bad2:"Thomas Jefferson", bad3: "Benjamin Franklin"}, {question:"Who is the first mayor of Washington, DC (since home rule)?", correct:"Walter Washington", bad1:"Marion Barry", bad2:"Muriel Bowser", bad3:"Linda Cropp"}];
+
+var geography = [{question: "what is the longest river in the world?", correct: "The Nile", bad1:"The Amazon", bad2: "Yangtze", bad3: "Yellow River"}, {question:"What is the tallest waterfall in the world?", correct: "Angel Falls, Venezuela", bad1:"Tugela Falls, South Africa", bad2:"Tres Hermanas Falls, Peru", bad3:"Olo'upena Falls, United States"}];
+
 function Validateentry (playerMessage) {
+	var returnValue = "";
 	var messageChoices = ["y", "yes", "Yes", "Y"];
 	if (messageChoices.includes(playerMessage)) {
-		return true;
+		return (returnValue = "yes");
 	}
-	else {
-		return false;
+
+	messageChoices = ["c", "C"];
+	if (messageChoices.includes(playerMessage)) {
+	return (returnValue = "con");
 	}
 }
 
@@ -121,16 +128,14 @@ function clickStartButton() {
 	messageContent = "";
 	switch (category) {
 		case "2":
-		// politics
-			console.log("case 2 hit");
 			loadPolitics();
 			break;
-//		case "3":
-//				washington, dc
-//			loadWQuestion();
-//		case  "Geography":
-//		// geography
-//			loadGQuestion();
+		case "3":
+			loadWashington();
+			break;
+		case "4":
+			loadGeography();
+			break;
 		default:
 			console.log("no category");
 	}
@@ -170,10 +175,70 @@ function loadPolitics() {
 
 }
 
+function loadGQuestion(i) {
+	console.log("loadGquestion");
+	
+	document.getElementById("question").textContent = geography[i]["question"];
+	firstchoice.textContent = geography[i]["correct"];
+	secondchoice.textContent = geography[i]["bad1"];
+	thirdchoice.textContent = geography[i]["bad2"];
+	fourthchoice.textContent = geography[i]["bad3"]; 
+
+}
+
+function loadGeography() {
+	console.log("loadGeography");
+	if (i > (geography.length - 1)) {
+		endOfGame();
+	}
+	else {
+		loadGQuestion(i);
+		i += 1;
+	}
+
+}
+
+function loadWQuestion(i) {
+	console.log("loadWquestion");
+	
+	document.getElementById("question").textContent = washington[i]["question"];
+	firstchoice.textContent = washington[i]["correct"];
+	secondchoice.textContent = washington[i]["bad1"];
+	thirdchoice.textContent = washington[i]["bad2"];
+	fourthchoice.textContent = washington[i]["bad3"]; 
+
+}
+
+function loadWashington() {
+	console.log("loadWashington");
+	if (i > (washington.length - 1)) {
+		endOfGame();
+	}
+	else {
+		loadWQuestion(i);
+		i += 1;
+	}
+
+}
+
 function endOfGame() {
 	console.log("endOfGame");
 	messageContent = endOfGameText;
 	document.getElementById("endofgametext").textContent = "You answered " + answeredCorrectly + " out of " + questionsAnswered + " questions";
+
+}
+
+function reset() {
+	console.log("reset");
+	document.getElementById("question").textContent = "";
+	firstchoice.textContent = "";
+	secondchoice.textContent = "";
+	thirdchoice.textContent = "";
+	fourthchoice.textContent = "";
+	messageContent = "";
+	i= 0; 
+	clearCheckboxes();
+
 
 }
 
@@ -188,20 +253,34 @@ entry.addEventListener( "keypress", function (event) {
 	console.log("eventListener");
 	var key = event.keyCode;
 	console.log(entry.value);
-	if ((key === 13) && (Validateentry(entry.value))) {
-		console.log("event if");
+	console.log(Validateentry(entry.value));
+	if ((key === 13) && (Validateentry(entry.value) === "yes")) {
+		console.log("event if y");		
+		document.getElementById("instructions").style.display = "none";
 		askForName();
+	}
+	else if ((key === 13) && (Validateentry(entry.value) === "con")) {
+		console.log("event if c");		
+		reset();
+		document.getElementById("category").value = 1;
+		entry.value = "";
 	}
 	else if ((key === 13) && (entry.value !== "")) {
 		console.log("else if event listener");
 		nameOfPlayer = entry.value;
 		startGame ="Ok " + nameOfPlayer + ", Select the Politics category and Press the Start button when you are ready!";
 		document.getElementById("messages").textContent = startGame;
+		entry.value = "";
 	}
+		else if (Validateentry(entry.value) === "con") {
+			console.log("event listener reset");
+		} 
+		else if (entry.value == "") {
+			console.log("event listener nothing entered");
+		}
 		else {
 			console.log("final else of event listener");
-//			nameOfPlayer = entry.value;
-//			document.getElementById("messages").textContent = askForNameVar;			
+			document.getElementById("messages").textContent = askForNameVar;			
 		}
 });
 
