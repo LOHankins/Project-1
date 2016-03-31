@@ -16,6 +16,7 @@ var checkBox1 = document.getElementById("cbox1");
 var checkBox2 = document.getElementById("cbox2");
 var checkBox3 = document.getElementById("cbox3");
 var checkBox4 = document.getElementById("cbox4");
+var correctChoice = 0;
 var congratulations = "Congratulations on the correct answer!  When you are ready for the next question, hit the start button.";
 var admonishment = "That was an incorrect answer. When you are ready for the next question, hit the start button.";
 var endOfGameText = "You have completed all of the questions for this category.  Your results are displayed on the scoreboard.  If you want to continue, put a c in the reply field, hit enter, pick another category and hit the start button.";
@@ -58,18 +59,15 @@ function askForName () {
 
 function clickCheckBox() {
 	console.log("clickCheckBox");
-	var cboxChoices = [checkBox2.checked, checkBox3.checked, checkBox4.checked];
+	var cboxChoices = [checkBox1.checked, checkBox2.checked, checkBox3.checked, checkBox4.checked];
 	questionsAnswered += 1;
 
-	if (checkBox1.checked === true) {
+	if (cboxChoices[correctChoice] === true) {
 		answeredCorrectly += 1;
 		correctAnswer();
 	}
-	else if (cboxChoices.includes(true)) {
+	else  {
 		wrongAnswer();
-	}
-	else {
-		return false;
 	}
 }
 
@@ -152,14 +150,41 @@ function clickStopButton() {
 	document.getElementById("messages").textContent = stopGameText;
 }
 
+function shuffle (array) {
+  var i = 0;
+  var j = 0;
+  var temp = null;
+
+  for (i = array.length - 1; i > 0; i -= 1) {
+    j = Math.floor(Math.random() * (i + 1));
+    temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+    if (j === 0) {
+    	correctChoice = i;
+    }
+  }
+}
+
 function loadPQuestion(i) {
 	console.log("loadPquestion");
+	var choices = [];
 	
 	document.getElementById("question").textContent = politics[i]["question"];
-	firstchoice.textContent = politics[i]["correct"];
-	secondchoice.textContent = politics[i]["bad1"];
-	thirdchoice.textContent = politics[i]["bad2"];
-	fourthchoice.textContent = politics[i]["bad3"]; 
+
+	choices[0] = politics[i]["correct"];
+	choices[1] = politics[i]["bad1"];
+	choices[2] = politics[i]["bad2"];
+	choices[3] = politics[i]["bad3"]; 
+
+	shuffle(choices);
+
+	firstchoice.textContent = choices[0];
+	secondchoice.textContent = choices[1];
+	thirdchoice.textContent = choices[2];
+	fourthchoice.textContent = choices[3]; 
+
+
 
 }
 
@@ -177,12 +202,21 @@ function loadPolitics() {
 
 function loadGQuestion(i) {
 	console.log("loadGquestion");
+	var choices = [];
 	
 	document.getElementById("question").textContent = geography[i]["question"];
-	firstchoice.textContent = geography[i]["correct"];
-	secondchoice.textContent = geography[i]["bad1"];
-	thirdchoice.textContent = geography[i]["bad2"];
-	fourthchoice.textContent = geography[i]["bad3"]; 
+
+	choices[0] = geography[i]["correct"];
+	choices[1] = geography[i]["bad1"];
+	choices[2] = geography[i]["bad2"];
+	choices[3] = geography[i]["bad3"]; 
+
+	shuffle(choices);
+
+	firstchoice.textContent = choices[0];
+	secondchoice.textContent = choices[1];
+	thirdchoice.textContent = choices[2];
+	fourthchoice.textContent = choices[3];
 
 }
 
@@ -200,12 +234,21 @@ function loadGeography() {
 
 function loadWQuestion(i) {
 	console.log("loadWquestion");
+	var choices = [];
 	
 	document.getElementById("question").textContent = washington[i]["question"];
-	firstchoice.textContent = washington[i]["correct"];
-	secondchoice.textContent = washington[i]["bad1"];
-	thirdchoice.textContent = washington[i]["bad2"];
-	fourthchoice.textContent = washington[i]["bad3"]; 
+
+	choices[0] = washington[i]["correct"];
+	choices[1] = washington[i]["bad1"];
+	choices[2] = washington[i]["bad2"];
+	choices[3] = washington[i]["bad3"]; 
+
+	shuffle(choices);
+
+	firstchoice.textContent = choices[0];
+	secondchoice.textContent = choices[1];
+	thirdchoice.textContent = choices[2];
+	fourthchoice.textContent = choices[3];
 
 }
 
