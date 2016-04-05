@@ -1,5 +1,5 @@
 
-
+// whoa. Without looking at the code base at all thus far. I'm wondering if all of these are absolutlely pertinent? Or if we can change some of the logic going forward to leverage less variables. Remember variables are temporary holding stores.. temporary!
 var welcome="Welcome to THE TRIVIA GAME!!!  This game will test your knowledge of various subjects.  Would you like to play? Please enter yes or no. ";
 var askForNameVar="OK Player, What is your name";
 var entry=document.getElementById("fromPlayer");
@@ -27,16 +27,24 @@ var hiScore = 0;
 var questionsAnswered = 0;
 var answeredCorrectly = 0;
 
-var politics = [{question:"Who is the POTUS?", correct:"Barack Obama", bad1:"George W. Bush", bad2:"Hillary Clinton", bad3:"Donald Trump"}, {question:"Who is the Vice-President?", correct:"Joe Biden", bad1:"Richard Daley", bad2:"Rayful Edmunds", bad3:"Marion Barry"}, {question:"In 2012, who did Barack Obama beat to win a second term?", correct:"Mitt Romney", bad1:"Bill Oreilly", bad2:"Sarah Palin", bad3:"John Boehner"}, {question:"Who was the Vice President for George W. Bush?", correct:"Dick Cheney", bad1:"George Jefferson", bad2:"Sarah Day O'Connor", bad3:"Vito Corleone"}, {question:"Who was the Vice President for Ronald Reagan?", correct:"George H W Bush", bad1:"George W. Bush", bad2:"Jeb Bush", bad3:"Bill Clinton"}];
+//Might be better to have an array represent the questions and identify one of the strings to be correct
+// there's some issue with the syntax highlighting for the strings. might be causing the incorrect answer. I changed the spacing, seemed to fix it.
+var politics = [{question:"Who is the POTUS?", correct:"Barack Obama", bad1:"George W. Bush", bad2:"Hillary Clinton", bad3:"Donald Trump"},
+ 								{question:"Who is the Vice-President?", correct:"Joe Biden", bad1:"Richard Daley", bad2:"Rayful Edmunds", bad3:"Marion Barry"},
+								{question:"In 2012, who did Barack Obama beat to win a second term?", correct:"Mitt Romney", bad1:"Bill Oreilly", bad2:"Sarah Palin", bad3:"John Boehner"},
+								{question:"Who was the Vice President for George W. Bush?", correct:"Dick Cheney", bad1:"George Jefferson", bad2:"Sarah Day O'Connor", bad3:"Vito Corleone"},
+								{question:"Who was the Vice President for Ronald Reagan?", correct:"George H W Bush", bad1:"George W. Bush", bad2:"Jeb Bush", bad3:"Bill Clinton"}];
 
 var washington = [{question:"Who is the designer of Washington, DC?", correct:"Pierre Charles L'Enfant", bad1:"George Washington", bad2:"Thomas Jefferson", bad3: "Benjamin Franklin"}, {question:"Who is the first mayor of Washington, DC (since home rule)?", correct:"Walter Washington", bad1:"Marion Barry", bad2:"Muriel Bowser", bad3:"Linda Cropp"}];
 
 var geography = [{question: "what is the longest river in the world?", correct: "The Nile", bad1:"The Amazon", bad2: "Yangtze", bad3: "Yellow River"}, {question:"What is the tallest waterfall in the world?", correct: "Angel Falls, Venezuela", bad1:"Tugela Falls, South Africa", bad2:"Tres Hermanas Falls, Peru", bad3:"Olo'upena Falls, United States"}];
 
+// resever capital functions for constructor functions only, this should be lower cased
 function Validateentry (playerMessage) {
 	var returnValue = "";
 	var messageChoices = ["y", "yes", "Yes", "Y"];
 	if (messageChoices.includes(playerMessage)) {
+		// i think this could simply be return "yes", soon as the functions done( ie returns a value), returnValue gets garbage collected. Since it's being instantiated in the return anywy, may as well get rid of the variable
 		return (returnValue = "yes");
 	}
 
@@ -122,10 +130,12 @@ function sendAdmonishment() {
 
 function clickStartButton() {
 	console.log("clickStartButton");
+	// i like that you abstracted this
 	var category = getCategory();
 	messageContent = "";
 	switch (category) {
 		case "2":
+		// i have a feeling these three functions are doing similar things, why not create a loadQuiz function that handles them all
 			loadPolitics();
 			break;
 		case "3":
@@ -142,14 +152,14 @@ function clickStartButton() {
 	document.getElementById("messages").textContent = messageContent;
 
 }
-
+// sounds like you're describing an event and not what the function actually does
 function clickStopButton() {
 	console.log("clickStopButton");
 	endOfGame();
 	clearCheckboxes();
 	document.getElementById("messages").textContent = stopGameText;
 }
-
+// place this method in a separate file called helpers.js
 function shuffle (array) {
   var i = 0;
   var j = 0;
@@ -161,6 +171,7 @@ function shuffle (array) {
     array[i] = array[j];
     array[j] = temp;
     if (j === 0) {
+			// although i'm not entirely sure how this sets the right choice.
     	correctChoice = i;
     }
   }
@@ -169,20 +180,20 @@ function shuffle (array) {
 function loadPQuestion(i) {
 	console.log("loadPquestion");
 	var choices = [];
-	
+
 	document.getElementById("question").textContent = politics[i]["question"];
 
 	choices[0] = politics[i]["correct"];
 	choices[1] = politics[i]["bad1"];
 	choices[2] = politics[i]["bad2"];
-	choices[3] = politics[i]["bad3"]; 
+	choices[3] = politics[i]["bad3"];
 
 	shuffle(choices);
 
 	firstchoice.textContent = choices[0];
 	secondchoice.textContent = choices[1];
 	thirdchoice.textContent = choices[2];
-	fourthchoice.textContent = choices[3]; 
+	fourthchoice.textContent = choices[3];
 
 
 
@@ -203,13 +214,13 @@ function loadPolitics() {
 function loadGQuestion(i) {
 	console.log("loadGquestion");
 	var choices = [];
-	
+
 	document.getElementById("question").textContent = geography[i]["question"];
 
 	choices[0] = geography[i]["correct"];
 	choices[1] = geography[i]["bad1"];
 	choices[2] = geography[i]["bad2"];
-	choices[3] = geography[i]["bad3"]; 
+	choices[3] = geography[i]["bad3"];
 
 	shuffle(choices);
 
@@ -231,17 +242,17 @@ function loadGeography() {
 	}
 
 }
-
+// i feel like a lot of this choice logic could be repurposed into better objects. And in doing so we just need to know which answer is correct in the object(programming logic form) then have our DOM reflect that state
 function loadWQuestion(i) {
 	console.log("loadWquestion");
 	var choices = [];
-	
+
 	document.getElementById("question").textContent = washington[i]["question"];
 
 	choices[0] = washington[i]["correct"];
 	choices[1] = washington[i]["bad1"];
 	choices[2] = washington[i]["bad2"];
-	choices[3] = washington[i]["bad3"]; 
+	choices[3] = washington[i]["bad3"];
 
 	shuffle(choices);
 
@@ -270,7 +281,7 @@ function endOfGame() {
 	document.getElementById("endofgametext").textContent = "You answered " + answeredCorrectly + " out of " + questionsAnswered + " questions";
 
 }
-
+// :+1:
 function reset() {
 	console.log("reset");
 	document.getElementById("question").textContent = "";
@@ -279,7 +290,7 @@ function reset() {
 	thirdchoice.textContent = "";
 	fourthchoice.textContent = "";
 	messageContent = "";
-	i= 0; 
+	i= 0;
 	clearCheckboxes();
 
 
@@ -297,13 +308,16 @@ entry.addEventListener( "keypress", function (event) {
 	var key = event.keyCode;
 	console.log(entry.value);
 	console.log(Validateentry(entry.value));
+	// doesn't seem like the Validateentry function is doing much beyond console.logging a value thus far
+	// as you are prototyping, things like this are more of a silver/gold oriented feature. I like the thought process, but i'm curious how much time this feature took up.
+  // as it stands, its a big buggy. I think the fact that the else condition is there to whitelist any values and continues on with the app.
 	if ((key === 13) && (Validateentry(entry.value) === "yes")) {
-		console.log("event if y");		
+		console.log("event if y");
 		document.getElementById("instructions").style.display = "none";
 		askForName();
 	}
 	else if ((key === 13) && (Validateentry(entry.value) === "con")) {
-		console.log("event if c");		
+		console.log("event if c");
 		reset();
 		document.getElementById("category").value = 1;
 		entry.value = "";
@@ -317,13 +331,13 @@ entry.addEventListener( "keypress", function (event) {
 	}
 		else if (Validateentry(entry.value) === "con") {
 			console.log("event listener reset");
-		} 
+		}
 		else if (entry.value == "") {
 			console.log("event listener nothing entered");
 		}
 		else {
 			console.log("final else of event listener");
-			document.getElementById("messages").textContent = askForNameVar;			
+			document.getElementById("messages").textContent = askForNameVar;
 		}
 });
 
@@ -333,6 +347,7 @@ checkBox4.addEventListener("click", clickCheckBox);
 checkBox3.addEventListener("click", clickCheckBox);
 checkBox2.addEventListener("click", clickCheckBox);
 checkBox1.addEventListener("click", clickCheckBox);
+// using what we've learned, how can we consolidate this into 3 total listeners instead of 6
 
 //	}
 
