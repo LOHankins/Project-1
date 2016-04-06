@@ -10,6 +10,6 @@ Performing - There's a lot of code here. There's a clear understanding of the fu
 Performing - Code is properly formatted/indented. Coming back to this code after 2-3 weeks will be difficult. It has no comments! There are lots of function definitions and invocations happening in various places, its hard to discern it all. I would recommend group parts of your code that are relevant to each other. Start figuring out ways to leverage the data rather than hardcoding logic into the DOM itself.
 
 ## Creativity/Interface
-Performing - Really like the idea. I encourage you to keep working on the timer to eliminate responses as the time goes.
+Performing/Progressing - Really like the idea. I encourage you to keep working on the timer to eliminate responses as the time goes. But more importantly, make sure the core functionality is bug free. 
 
 Great job overall Louis!
